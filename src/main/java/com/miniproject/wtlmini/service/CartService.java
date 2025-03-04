@@ -54,12 +54,6 @@ public class CartService {
 
         checkoutCart.setUserID(userList);
         checkoutCart.setBookID(booksList);     
-
-        Books book = booksService.getBookById(insertCartDto.getBookID())
-                .orElseThrow(() -> new RuntimeException("Book not found"));
-
-        Cart checkoutCart = mapper.toEntity(insertCartDto, Cart.class);
-
         checkoutCart.setStatus("Checked Out");
         checkoutCart.setTotalPrice(book.getPrice() * insertCartDto.getQuantity());
       
