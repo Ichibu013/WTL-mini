@@ -26,7 +26,7 @@ public class Cart {
 
     private String quantity;
 
-    private String totalPrice;
+    private int totalPrice;
 
     private String status;
 

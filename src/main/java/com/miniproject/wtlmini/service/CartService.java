@@ -54,7 +54,7 @@ public class CartService {
         checkoutCart.setBookID(booksList);
 
         checkoutCart.setStatus("Checked Out");
-        checkoutCart.setTotalPrice(String.valueOf(book.getPrice() * insertCartDto.getQuantity()));
+        checkoutCart.setTotalPrice(book.getPrice() * insertCartDto.getQuantity());
 
         log.info("Item added to cart: {}", checkoutCart);
 
