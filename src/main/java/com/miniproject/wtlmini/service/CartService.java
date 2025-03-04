@@ -10,6 +10,7 @@ import com.miniproject.wtlmini.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,10 +41,17 @@ public class CartService {
         User user = userRepository.findById(insertCartDto.getUserID())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        List<User> userList = new ArrayList<>(Collections.singletonList(user));
+
         Books book = booksService.getBookById(insertCartDto.getBookID())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
+        List<Books> booksList = new ArrayList<>(Collections.singleton(book));
+
         Cart checkoutCart = mapper.toEntity(insertCartDto, Cart.class);
+
+        checkoutCart.setUserID(userList);
+        checkoutCart.setBookID(booksList);
 
         checkoutCart.setStatus("Checked Out");
         checkoutCart.setTotalPrice(String.valueOf(book.getPrice() * insertCartDto.getQuantity()));
