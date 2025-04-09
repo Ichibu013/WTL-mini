@@ -20,20 +20,8 @@ public class UserController {
         this.userService = userService;
     }
 
-
-    @GetMapping("/test")
-    public String test() {
-        return "Hello World";
-    }
-
-    @Operation(summary = "Get all users")
-    @GetMapping("/list")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @Operation(summary = "Create new user")
-    @PostMapping("/create")
+    @PostMapping("/register")
     public User saveUser(@RequestBody CreateUserDto user) {
         return userService.saveUser(user);
     }

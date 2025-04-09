@@ -14,25 +14,30 @@ public class Books {
     @Id
     private String id;
 
-    private String name;
+    private String title;
 
     private String author;
 
-    private String publisher;
-
-    private String description;
-
-    private String coverImageID;
-
-    private String isbn;
+    private int price;
 
     private String category;
 
-    private String status;
+    private String language;
 
-    private String quantity;
+    private String imageUrl;
 
-    private int price;
+    private String description;
 
+    private String isbn;
+
+    private String publishDate;
+
+    private String publisher;
+
+    private int pageCount;
+
+    private float rating;
+
+    private int reviews;
 
 }

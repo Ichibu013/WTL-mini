@@ -30,6 +30,7 @@ public class UserService {
 
     public User saveUser(CreateUserDto createUserDto) {
         User userToSave = mapper.toEntity(createUserDto, User.class);
+        userToSave.setRole("user");
         log.info("User to save: {}", userToSave);
         return userRepository.save(userToSave);
     }

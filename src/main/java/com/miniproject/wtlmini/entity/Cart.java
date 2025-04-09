@@ -22,7 +22,7 @@ public class Cart {
     private String id;
 
     @DBRef
-    private List<User> userID;
+    private User userID;
 
     @DBRef
     private List<Books> bookID;

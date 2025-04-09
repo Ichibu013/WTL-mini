@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("unused")
-public class CheckoutCartDto {
-
-    private String cartID;
+public class cartRequestDto {
 
     private String userID;
 
