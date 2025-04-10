@@ -29,22 +29,20 @@ public class CartController {
 
     @Operation(summary = "Add item to cart")
     @PatchMapping("/add-to-cart")
-    public Cart addToCart(@RequestBody InsertCartDto insertCartDto,
-                          @RequestBody String cartID) {
-        cartID = cartID.replace("\"", "").trim();
-        return cartService.addToCart(insertCartDto, cartID);
+    public Cart addToCart(@RequestBody InsertCartDto insertCartDto) {
+        return cartService.addToCart(insertCartDto);
     }
 
     @Operation(summary = "Delete cart")
     @PostMapping("/delete")
-    public Cart deleteCart(CheckoutCartDto checkoutCartDto) {
-        return cartService.deleteCart(checkoutCartDto.getCartID(), checkoutCartDto.getUserID());
+    public Cart deleteCart(@RequestBody CheckoutCartDto checkoutCartDto) {
+        return cartService.deleteCart(checkoutCartDto);
     }
 
     @Operation(summary = "Cart checkout")
-    @PatchMapping("/checkout")
-    public Cart checkoutCart(CheckoutCartDto checkoutCartDto) {
-        return cartService.checkout(checkoutCartDto.getCartID(), checkoutCartDto.getUserID());
+    @PostMapping("/checkout")
+    public Cart checkoutCart(@RequestBody CheckoutCartDto checkoutCartDto) {
+        return cartService.checkout(checkoutCartDto);
     }
 
     @Operation(summary = "Get current cart")

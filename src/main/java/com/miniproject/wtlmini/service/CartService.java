@@ -1,5 +1,6 @@
 package com.miniproject.wtlmini.service;
 
+import com.miniproject.wtlmini.dto.cart.CheckoutCartDto;
 import com.miniproject.wtlmini.dto.cart.InsertCartDto;
 import com.miniproject.wtlmini.entity.Books;
 import com.miniproject.wtlmini.entity.Cart;
@@ -46,26 +47,29 @@ public class CartService {
         return newCart.getId();
     }
 
-    public Cart addToCart(InsertCartDto insertCartDto, String cartId) {
-        User user = userRepository.findById(insertCartDto.getUserID())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Cart addToCart(InsertCartDto insertCartDto) {
 
-        Cart cart = cartRepository.findById(cartId)
+        Cart cart = cartRepository.findById(insertCartDto.getCartID())
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         Books book = booksRepository.findById(insertCartDto.getBookID())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        List<Books> booksList = new ArrayList<>(cart.getBookID());
-        booksList.add(book);
-        cart.setBookID(booksList);
+        if (cart.getBookID() == null) {
+            cart.setBookID(new ArrayList<>());
+        }
+        cart.getBookID().add(book);
+        log.info("Added {} to cart", book.getId());
         return cartRepository.save(cart); // Save and return the updated cart
     }
 
-    public Cart deleteCart(String cartId, String userID) {
-        cartRepository.deleteById(cartId);
+    public Cart deleteCart(CheckoutCartDto checkoutCartDto) {
+        log.info("Checkout cart with id: {}", checkoutCartDto.getCartID());
+        log.info("User id: {}", checkoutCartDto.getUserID());
 
-        User user = userRepository.findById(userID)
+        cartRepository.deleteById(checkoutCartDto.getCartID());
+
+        User user = userRepository.findById(checkoutCartDto.getUserID())
                 .orElseThrow(() -> new RuntimeException("user not found"));
 
         Cart cart = new Cart();
@@ -75,10 +79,12 @@ public class CartService {
         return cart;
     }
 
-    public Cart checkout(String cartId, String userID) {
-        Cart cart = cartRepository.findById(cartId)
+    public Cart checkout(CheckoutCartDto checkoutCartDto) {
+        log.info("Checkout cart with id: {}", checkoutCartDto.getCartID());
+        log.info("User id: {}", checkoutCartDto.getUserID());
+        Cart cart = cartRepository.findById(checkoutCartDto.getCartID())
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
-        User user = userRepository.findById(userID)
+        User user = userRepository.findById(checkoutCartDto.getUserID())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         cart.setStatus("checkout");
         cartRepository.save(cart);
