@@ -27,10 +27,6 @@ public class Cart {
     @DBRef
     private List<Books> bookID;
 
-    private String quantity;
-
-    private int totalPrice;
-
     private String status;
 
 }
